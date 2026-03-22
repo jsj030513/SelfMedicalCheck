@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Med | 백석대 주변 병원 찾기</title>
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/hospital.css">
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c4f7df5242d15b47480c22dd7c2bc1a2&libraries=services"></script>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+          <a href="./index.html" class="logo" style="text-decoration:none;">
+            <div class="logo-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div class="logo-text">Self-<span>Med</span></div>
+          </a>
+          
+          <nav class="nav-menu">
+            <a href="./main.html" class="nav-link">자가진단</a>
+            <a href="./hospital.html" class="nav-link active">병원찾기</a>
+          </nav>
+      
+          <div class="auth-buttons">
+            </div>
+            <a href="./login.html" class="nav-link">로그인</a>
+            <a href="./join.html" class="nav-link">회원가입</a>
+          </div>
+        </div>
+      </header>
+
+<div class="hospital-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-icon">📍</div>
+      <h1 class="auth-title">백석대학교 주변 병원</h1>
+      <p class="auth-subtitle">학교 근처의 진료기관을 확인하세요.</p>
+    </div>
+
+    <div class="near-hospital" id="hospital-kind">
+      <div class="part-chip" data-keyword="내과"> <div class="dot"></div> 내과 </div>
+      <div class="part-chip" data-keyword="치과"> <div class="dot"></div> 치과 </div>
+      <div class="part-chip" data-keyword="정형외과"> <div class="dot"></div> 정형외과 </div>
+      <div class="part-chip" data-keyword="이비인후과"> <div class="dot"></div> 이비인후과 </div>
+      <div class="part-chip" data-keyword="피부과"> <div class="dot"></div> 피부과 </div>
+      <div class="part-chip" data-keyword="종합병원"> <div class="dot"></div> 종합병원 </div>
+    </div>
+    
+    <div id="general-map"></div>
+    <div id="general-map" class="map-placeholder">
+        <div class="placeholder-content">
+            <i class="fas fa-map-marked-alt"></i>
+            <p>백석대학교 주변 병원 지도</p>
+            <span>(API 연결 대기 중)</span>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/map.js"></script>
+</body>
+</html>

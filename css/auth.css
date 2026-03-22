@@ -1,0 +1,85 @@
+/* auth.css */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--background); /* style.css의 배경색 변수 사용 */
+  }
+  
+  .auth-box {
+    background: var(--card);
+    padding: 40px 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .auth-box h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: var(--foreground);
+  }
+  
+  /* 입력창을 세로로 꽉 차게 배치 */
+  .auth-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .auth-box input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .auth-box input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+  
+  /* 가입완료 버튼 강조 */
+  .btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
+  }
+  
+  .btn-primary:hover {
+    background: var(--foreground);
+    transform: translateY(-2px);
+  }
+  
+  .auth-footer {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--muted-fg);
+  }
+  
+  .auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  
+  .auth-footer a:hover {
+    text-decoration: underline;
+  }

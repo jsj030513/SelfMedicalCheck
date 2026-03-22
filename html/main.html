@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>스마트 자가진단</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="./index.html" class="logo" style="text-decoration: none; color: inherit;">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="logo-text">Self-<span>Med</span></div>
+    </a>
+
+    <nav class="nav-menu">
+      <a href="./main.html" class="nav-link active">자가진단</a>
+      <a href="./hospital.html" class="nav-link">병원찾기</a>
+    </nav>
+
+    <div class="auth-buttons">
+      <a href="./login.html" class="nav-link">로그인</a>
+      <a href="./join.html" class="nav-link">회원가입</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="panel diagram-panel">
+    <div class="diagram-title">
+      <h2>아픈 곳을 선택하세요</h2>
+      <p>인체 모형에서 아픈 부위를 클릭하면<br>관련 정보를 확인할 수 있습니다.</p>
+    </div>
+
+    <div class="view-toggle">
+      <button id="btn-front" class="active" onclick="setView('front')">앞면</button>
+      <button id="btn-back" onclick="setView('back')">뒷면</button>
+    </div>
+
+    <svg id="body-svg" viewBox="0 0 300 700" xmlns="http://www.w3.org/2000/svg">
+      <rect class="silhouette" x="70" y="60" width="160" height="580" rx="40"/>
+
+      <g id="front-view">
+        <circle class="region" cx="150" cy="70"  r="35"   data-part="head"/>
+        <circle class="region" cx="135" cy="60"  r="7"    data-part="eye"/>
+        <circle class="region" cx="165" cy="60"  r="7"    data-part="eye"/>
+        <ellipse class="region" cx="110" cy="70"  rx="7"  ry="13" data-part="ear"/>
+        <ellipse class="region" cx="190" cy="70"  rx="7"  ry="13" data-part="ear"/>
+        <path class="region" d="M150 63 L155 76 L145 76 Z" data-part="nose"/>
+        <rect class="region" x="133" y="106" width="34" height="26" rx="5"  data-part="throat"/>
+        <rect class="region" x="98"  y="124" width="37" height="32" rx="10" data-part="shoulder"/>
+        <rect class="region" x="165" y="124" width="37" height="32" rx="10" data-part="shoulder"/>
+        <rect class="region" x="114" y="130" width="72" height="72" rx="15" data-part="chest"/>
+        <rect class="region" x="114" y="202" width="72" height="82" rx="15" data-part="stomach"/>
+        <rect class="region" x="78"  y="150" width="28" height="82" rx="13" data-part="arm"/>
+        <rect class="region" x="194" y="150" width="28" height="82" rx="13" data-part="arm"/>
+        <rect class="region" x="75"  y="228" width="28" height="22" rx="8"  data-part="elbow"/>
+        <rect class="region" x="197" y="228" width="28" height="22" rx="8"  data-part="elbow"/>
+        <rect class="region" x="72"  y="246" width="26" height="76" rx="12" data-part="arm"/>
+        <rect class="region" x="202" y="246" width="26" height="76" rx="12" data-part="arm"/>
+        <rect class="region" x="68"  y="320" width="26" height="16" rx="6"  data-part="wrist"/>
+        <rect class="region" x="206" y="320" width="26" height="16" rx="6"  data-part="wrist"/>
+        <rect class="region" x="63"  y="336" width="32" height="42" rx="12" data-part="hand"/>
+        <rect class="region" x="205" y="336" width="32" height="42" rx="12" data-part="hand"/>
+        <rect class="region" x="108" y="282" width="84" height="62" rx="20" data-part="hip"/>
+        <rect class="region" x="110" y="342" width="37" height="112" rx="15" data-part="thigh"/>
+        <rect class="region" x="153" y="342" width="37" height="112" rx="15" data-part="thigh"/>
+        <rect class="region" x="113" y="452" width="32" height="26" rx="10" data-part="knee"/>
+        <rect class="region" x="155" y="452" width="32" height="26" rx="10" data-part="knee"/>
+        <rect class="region" x="114" y="476" width="30" height="102" rx="12" data-part="calf"/>
+        <rect class="region" x="156" y="476" width="30" height="102" rx="12" data-part="calf"/>
+        <rect class="region" x="116" y="576" width="26" height="16" rx="6"  data-part="ankle"/>
+        <rect class="region" x="158" y="576" width="26" height="16" rx="6"  data-part="ankle"/>
+        <rect class="region" x="111" y="592" width="34" height="42" rx="12" data-part="foot"/>
+        <rect class="region" x="155" y="592" width="34" height="42" rx="12" data-part="foot"/>
+      </g>
+
+      <g id="back-view" style="display:none">
+        <circle class="region" cx="150" cy="70"  r="35"   data-part="head"/>
+        <ellipse class="region" cx="110" cy="70"  rx="7"  ry="13" data-part="ear"/>
+        <ellipse class="region" cx="190" cy="70"  rx="7"  ry="13" data-part="ear"/>
+        <rect class="region" x="133" y="106" width="34" height="26" rx="5"  data-part="throat"/>
+        <rect class="region" x="98"  y="124" width="37" height="32" rx="10" data-part="shoulder"/>
+        <rect class="region" x="165" y="124" width="37" height="32" rx="10" data-part="shoulder"/>
+        <rect class="region" x="114" y="130" width="72" height="155" rx="15" data-part="back"/>
+        <rect class="region" x="78"  y="150" width="28" height="82" rx="13" data-part="arm"/>
+        <rect class="region" x="194" y="150" width="28" height="82" rx="13" data-part="arm"/>
+        <rect class="region" x="75"  y="228" width="28" height="22" rx="8"  data-part="elbow"/>
+        <rect class="region" x="197" y="228" width="28" height="22" rx="8"  data-part="elbow"/>
+        <rect class="region" x="72"  y="246" width="26" height="76" rx="12" data-part="arm"/>
+        <rect class="region" x="202" y="246" width="26" height="76" rx="12" data-part="arm"/>
+        <rect class="region" x="68"  y="320" width="26" height="16" rx="6"  data-part="wrist"/>
+        <rect class="region" x="206" y="320" width="26" height="16" rx="6"  data-part="wrist"/>
+        <rect class="region" x="63"  y="336" width="32" height="42" rx="12" data-part="hand"/>
+        <rect class="region" x="205" y="336" width="32" height="42" rx="12" data-part="hand"/>
+        <rect class="region" x="108" y="282" width="84" height="62" rx="20" data-part="hip"/>
+        <rect class="region" x="110" y="342" width="37" height="112" rx="15" data-part="thigh"/>
+        <rect class="region" x="153" y="342" width="37" height="112" rx="15" data-part="thigh"/>
+        <rect class="region" x="113" y="452" width="32" height="26" rx="10" data-part="knee"/>
+        <rect class="region" x="155" y="452" width="32" height="26" rx="10" data-part="knee"/>
+        <rect class="region" x="114" y="476" width="30" height="102" rx="12" data-part="calf"/>
+        <rect class="region" x="156" y="476" width="30" height="102" rx="12" data-part="calf"/>
+        <rect class="region" x="116" y="576" width="26" height="16" rx="6"  data-part="ankle"/>
+        <rect class="region" x="158" y="576" width="26" height="16" rx="6"  data-part="ankle"/>
+        <rect class="region" x="111" y="592" width="34" height="42" rx="12" data-part="foot"/>
+        <rect class="region" x="155" y="592" width="34" height="42" rx="12" data-part="foot"/>
+      </g>
+    </svg>
+
+    <div class="body-labels" id="label-buttons"></div>
+  </div>
+
+  <div class="panel result-panel">
+    <div id="empty-state">
+      <div class="empty-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <h3>어디가 불편하신가요?</h3>
+      <p>왼쪽의 인체 모형에서 아픈 부위를 클릭하시면, 해당 부위의 흔한 가벼운 질환과 처방전 없이 구할 수 있는 약 정보를 알려드립니다.</p>
+    </div>
+
+    <div id="result-content">
+      <div class="result-header">
+        <div class="result-header-row">
+          <div class="result-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h2 id="result-title">부위 <span>증상 분석</span></h2>
+        </div>
+        <p>선택하신 부위에 발생할 수 있는 일반적인 질환 정보입니다.</p>
+      </div>
+      <div class="result-body">
+        <section>
+          <div class="section-title"><div class="bar bar-primary"></div>예상되는 가벼운 질환</div>
+          <div id="conditions-list"></div>
+        </section>
+        <section>
+          <div class="section-title"><div class="bar bar-accent"></div>추천 상비약 (OTC)</div>
+          <div class="medicine-grid" id="medicines-grid"></div>
+        </section>
+      </div>
+      <div class="disclaimer">
+        ⚠️ 본 서비스는 참고용이며, 의학적 진단을 대체할 수 없습니다. 증상이 심하거나 지속될 경우 반드시 의사와 상담하세요.
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../js/script.js"></script>
+</body>
+</html>
