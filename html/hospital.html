@@ -8,38 +8,37 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/hospital.css">
 
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b84a7c66e4422dfe8d914c174dbddef4&libraries=services"></script>
+  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b84a7c66e4422dfe8d914c174dbddef4&libraries=services"></script>
 </head>
 <body>
 
-    <header>
-        <div class="header-inner">
-          <a href="./index.html" class="logo" style="text-decoration:none;">
-            <div class="logo-icon">
-              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </div>
-            <div class="logo-text">Self-<span>Med</span></div>
-          </a>
-          
-          <nav class="nav-menu">
-            <a href="./main.html" class="nav-link">자가진단</a>
-            <a href="./hospital.html" class="nav-link active">병원찾기</a>
-          </nav>
-      
-          <div class="auth-buttons">
-            </div>
-            <a href="./login.html" class="nav-link">로그인</a>
-            <a href="./join.html" class="nav-link">회원가입</a>
-          </div>
-        </div>
-      </header>
+<header>
+  <div class="header-inner">
+    <a href="./main.html" class="logo" style="text-decoration:none;">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="logo-text">Self-<span>Med</span></div>
+    </a>
+    
+    <nav class="nav-menu">
+      <a href="./main.html" class="nav-link">자가진단</a>
+      <a href="./hospital.html" class="nav-link active">병원찾기</a>
+    </nav>
+
+    <div class="auth-buttons">
+      <a href="./login.html" class="nav-link">로그인</a>
+      <a href="./join.html" class="nav-link">회원가입</a>
+    </div>
+  </div>
+</header>
 
 <div class="hospital-container">
   <div class="auth-card">
     <div class="auth-header">
       <div class="auth-icon">📍</div>
       <h1 class="auth-title">백석대학교 주변 병원</h1>
-      <p class="auth-subtitle">학교 근처의 진료기관을 확인하세요.</p>
+      <p class="auth-subtitle">학교 및 신부동 인근의 진료기관을 확인하세요.</p>
     </div>
 
     <div class="near-hospital" id="hospital-kind">
@@ -52,13 +51,11 @@
       <div class="part-chip" data-keyword="종합병원"> <div class="dot"></div> 종합병원 </div>
     </div>
     
-    <div id="general-map"></div>
-    <div id="general-map" class="map-placeholder">
-        <div class="placeholder-content">
-            <i class="fas fa-map-marked-alt"></i>
-            <p>백석대학교 주변 병원 지도</p>
-            <span>(API 연결 대기 중)</span>
-        </div>
+    <div class="hospital-content-wrapper">
+      <div id="general-map"></div>  
+      <div id="hospital-list" class="hospital-list">
+            </div>
+        
     </div>
   </div>
 </div>

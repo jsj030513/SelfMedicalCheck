@@ -1,87 +1,91 @@
 let map, ps, infowindow;
-let markers = []; // 이전 마커들을 관리하기 위한 배열
+let markers = [];
+const BAEKSEOK_COORD = new kakao.maps.LatLng(36.8393, 127.1859); 
 
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. HTML의 ID 'general-map'과 일치 확인
-  const mapContainer = document.getElementById('general-map'); 
-  
-  if (!mapContainer) {
-    console.error("지도를 담을 'general-map' 엘리먼트를 찾을 수 없습니다.");
-    return;
-  }
+window.onload = function() {
+    const mapContainer = document.getElementById('general-map'); 
+    if (!mapContainer) return;
 
-  const mapOption = {
-    center: new kakao.maps.LatLng(36.8393, 127.1859), // 백석대학교
-    level: 4
-  };
-  
-  map = new kakao.maps.Map(mapContainer, mapOption);
-  ps = new kakao.maps.services.Places();
-  infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
-  // 2. 진료과목 칩(Chip) 클릭 이벤트 연결
-  const chips = document.querySelectorAll('.part-chip');
-  chips.forEach(chip => {
-    chip.addEventListener('click', function() {
-      // 모든 칩에서 active 제거 후 클릭한 것만 추가
-      chips.forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-
-      const keyword = this.getAttribute('data-keyword');
-      searchHospital(keyword);
+    map = new kakao.maps.Map(mapContainer, {
+        center: BAEKSEOK_COORD,
+        level: 4
     });
-  });
-});
+    
+    ps = new kakao.maps.services.Places();
+    infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-// 백석대 주변 검색 함수
+    const chips = document.querySelectorAll('.part-chip');
+    chips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            chips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            searchHospital(this.getAttribute('data-keyword'));
+        });
+    });
+
+    // 초기 실행
+    searchHospital('내과');
+};
+
 function searchHospital(category) {
-  if (!category) return;
+    if (!category || !ps) return;
+    infowindow.close();
 
-  const options = {
-    location: new kakao.maps.LatLng(36.8393, 127.1859),
-    radius: 2000, 
-    sort: kakao.maps.services.SortBy.DISTANCE
-  };
+    const options = {
+        location: BAEKSEOK_COORD,
+        radius: 4000, // 4km로 확대하여 신부동까지 포함
+        sort: kakao.maps.services.SortBy.DISTANCE
+    };
 
-  ps.keywordSearch(`백석대 ${category}`, placesSearchCB, options);
-}
-
-function placesSearchCB(data, status) {
-  if (status === kakao.maps.services.Status.OK) {
-    displayPlaces(data);
-  } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-    alert('백석대 주변에 해당 진료기관이 없습니다.');
-  } else {
-    alert('검색 중 오류가 발생했습니다.');
-  }
+    ps.keywordSearch(`천안 ${category}`, (data, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+            displayPlaces(data);
+        } else {
+            document.getElementById('hospital-list').innerHTML = '<p class="list-empty">검색 결과가 없습니다.</p>';
+            removeMarkers();
+        }
+    }, options);
 }
 
 function displayPlaces(places) {
-  removeMarkers(); // 기존 마커 싹 지우기
-  
-  const bounds = new kakao.maps.LatLngBounds();
-  
-  places.forEach((place) => {
-    const placePosition = new kakao.maps.LatLng(place.y, place.x);
-    const marker = new kakao.maps.Marker({
-      position: placePosition,
-      map: map
+    removeMarkers();
+    const bounds = new kakao.maps.LatLngBounds();
+    const listEl = document.getElementById('hospital-list');
+    listEl.innerHTML = ''; 
+
+    places.forEach((place) => {
+        const markerPosition = new kakao.maps.LatLng(place.y, place.x);
+        const marker = new kakao.maps.Marker({
+            position: markerPosition,
+            map: map
+        });
+
+        // 리스트 카드 생성
+        const itemEl = document.createElement('div');
+        itemEl.className = 'hospital-item';
+        itemEl.innerHTML = `
+            <h3>${place.place_name}</h3>
+            <p>📍 ${place.road_address_name || place.address_name}</p>
+            <p>📞 ${place.phone || '번호 정보 없음'}</p>
+            <span class="distance">백석대에서 약 ${place.distance}m</span>
+        `;
+
+        // 카드 클릭 시 지도를 해당 위치로 이동 및 정보창 표시
+        itemEl.onclick = () => {
+            map.panTo(markerPosition);
+            infowindow.setContent(`<div style="padding:10px;font-size:12px;font-weight:600;">${place.place_name}</div>`);
+            infowindow.open(map, marker);
+        };
+
+        listEl.appendChild(itemEl);
+        markers.push(marker);
+        bounds.extend(markerPosition);
     });
 
-    // 마커 클릭 시 정보창 표시
-    kakao.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(`<div style="padding:10px;font-size:12px;font-weight:bold;">${place.place_name}</div>`);
-      infowindow.open(map, marker);
-    });
-
-    markers.push(marker);
-    bounds.extend(placePosition);
-  });
-
-  map.setBounds(bounds);
+    map.setBounds(bounds);
 }
 
 function removeMarkers() {
-  markers.forEach(m => m.setMap(null));
-  markers = [];
+    markers.forEach(m => m.setMap(null));
+    markers = [];
 }
