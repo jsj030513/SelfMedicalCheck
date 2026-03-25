@@ -33,7 +33,7 @@ function searchHospital(category) {
 
     const options = {
         location: BAEKSEOK_COORD,
-        radius: 4000, // 4km로 확대하여 신부동까지 포함
+        radius: 8000, // 4km로 확대하여 신부동까지 포함
         sort: kakao.maps.services.SortBy.DISTANCE
     };
 
